@@ -1,0 +1,36 @@
+body {
+    background-color: rgb(163, 230, 255);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 50px;
+    margin: 0;
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-bottom: 40px;
+    color: rgb(19, 1, 85);
+  }
+  
+  .buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  button {
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: white;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #ddd;
+  }
+  
