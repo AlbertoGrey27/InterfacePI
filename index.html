@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lixeira Inteligente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Qual o tipo de resíduo que você está descartando?</h1>
+  
+  <div class="buttons-container">
+    <img src="Metal.png" alt="" onclick="handleClick('Metal')">
+    <img src="Papel2.png" alt="" onclick="handleClick('Papel')">
+    <img src="Plástico.png" alt="" onclick="handleClick('Plástico')">
+    <img src="Vidro.png" alt="" onclick="handleClick('Vidro')">
+  </div>
+  <br>
+  <div>
+    <li><a href="#pontuacao">|Pontuação|</a></li>    
+  </div>
+  <br>
+  <section id="pontuacao">
+    <h2>Registrar Pontuação</h2>
+    <form id="formPontuacao">
+      <input type="text" id="nomeUsuario" placeholder="Seu nome" required>
+      <button type="submit">Enviar</button>
+    </form>
+    <p id="mensagemResposta"></p>
+  </section>
+
+
+  <script src="main.js"></script>
+</body>
+</html>
