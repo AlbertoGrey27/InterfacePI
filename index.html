@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro e Ranking</title>
+  <style>
+    /* Reset básico */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #333;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; padding: 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      max-width: 500px; width: 100%; padding: 30px;
+      text-align: center;
+    }
+    nav {
+      display: flex; justify-content: center; margin-bottom: 20px;
+    }
+    nav button {
+      margin: 0 10px; padding: 10px 20px;
+      background: none; border: none; font-size: 1rem;
+      cursor: pointer; transition: color 0.3s, border-bottom 0.3s;
+      color: #555; border-bottom: 2px solid transparent;
+    }
+    nav button.active {
+      color: #6a11cb; border-bottom-color: #6a11cb;
+    }
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    /* Formulário */
+    label { text-align: left; margin-bottom: 8px; font-weight: 500; color: #555; }
+    input {
+      padding: 12px 15px; font-size: 1rem;
+      border: 2px solid #ddd; border-radius: 8px;
+      transition: border-color 0.3s; margin-bottom: 15px;
+      width: 100%;
+    }
+    input:focus { outline: none; border-color: #6a11cb; }
+    button[type="submit"] {
+      padding: 12px; font-size: 1rem;
+      background: #6a11cb; color: #fff; border: none;
+      border-radius: 8px; cursor: pointer; transition: background 0.3s;
+      width: 100%;
+    }
+    button[type="submit"]:hover { background: #5142a6; }
+    #message { margin-top: 20px; font-size: 1rem; min-height: 1.2em; transition: color 0.3s; }
+    .error { color: #e74c3c; }
+    .success { color: #27ae60; }
+    /* Ranking */
+    #rankingSection h2 {
+      margin-bottom: 15px; color: #2575fc;
+    }
+    #rankingTable {
+      width: 100%; border-collapse: collapse; margin-bottom: 10px;
+    }
+    #rankingTable th, #rankingTable td {
+      padding: 12px; text-align: left; border-bottom: 1px solid #eee;
+    }
+    #rankingTable th {
+      background: #6a11cb; color: #fff;
+    }
+    #rankingMessage { font-size: 1rem; min-height: 1.2em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <button id="cadastroNav" class="active">Cadastro</button>
+      <button id="rankingNav">Ranking</button>
+    </nav>
+    <section id="cadastroSection" class="active">
+      <h1>Cadastro de Matrícula</h1>
+      <form id="cadastroForm">
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" required pattern="\d+" title="Apenas números">
+        <button type="submit">Enviar</button>
+      </form>
+      <div id="message"></div>
+    </section>
+    <section id="rankingSection">
+      <h2>Ranking de Pontos</h2>
+      <table id="rankingTable">
+        <thead>
+          <tr><th>Matrícula</th><th>Pontos</th></tr>
+        </thead>
+        <tbody id="rankingBody"></tbody>
+      </table>
+      <div id="rankingMessage"></div>
+    </section>
+  </div>
+  <script>
+    const cadastroNav = document.getElementById('cadastroNav');
+    const rankingNav = document.getElementById('rankingNav');
+    const cadastroSection = document.getElementById('cadastroSection');
+    const rankingSection = document.getElementById('rankingSection');
+
+    cadastroNav.addEventListener('click', () => showSection('cadastro'));
+    rankingNav.addEventListener('click', () => showSection('ranking'));
+
+    function showSection(name) {
+      if (name === 'cadastro') {
+        cadastroNav.classList.add('active');
+        rankingNav.classList.remove('active');
+        cadastroSection.classList.add('active');
+        rankingSection.classList.remove('active');
+      } else {
+        cadastroNav.classList.remove('active');
+        rankingNav.classList.add('active');
+        cadastroSection.classList.remove('active');
+        rankingSection.classList.add('active');
+        loadRanking();
+      }
+    }
+
+    // Cadastro
+    document.getElementById('cadastroForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const msgEl = document.getElementById('message');
+      msgEl.textContent = '';
+      msgEl.className = '';
+      const matricula = document.getElementById('matricula').value.trim();
+      if (!matricula) {
+        msgEl.textContent = 'Informe sua matrícula.';
+        msgEl.className = 'error';
+        return;
+      }
+      if (!/^\d+$/.test(matricula)) {
+        msgEl.textContent = 'Matrícula inválida. Use apenas números.';
+        msgEl.className = 'error';
+        return;
+      }
+      try {
+        const response = await fetch('/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ matricula })
+        });
+        if (!response.ok) throw new Error('Erro de rede');
+        const data = await response.json();
+        msgEl.textContent = `Matrícula ${data.matricula} registrada. Pontos: ${data.points}.`;
+        msgEl.className = 'success';
+      } catch (err) {
+        msgEl.textContent = 'Erro ao cadastrar. Tente novamente.';
+        msgEl.className = 'error';
+        console.error(err);
+      }
+    });
+
+    // Ranking
+    async function loadRanking() {
+      const body = document.getElementById('rankingBody');
+      const msg = document.getElementById('rankingMessage');
+      body.innerHTML = '';
+      msg.textContent = 'Carregando...';
+      try {
+        const res = await fetch('/ranking');
+        if (!res.ok) throw new Error('Erro ao obter ranking');
+        const list = await res.json();
+        if (list.length === 0) {
+          msg.textContent = 'Nenhuma matrícula cadastrada ainda.';
+          return;
+        }
+        msg.textContent = '';
+        list.sort((a,b) => b.points - a.points);
+        list.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${item.matricula}</td><td>${item.points}</td>`;
+          body.appendChild(tr);
+        });
+      } catch (err) {
+        msg.textContent = 'Falha ao carregar ranking.';
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
