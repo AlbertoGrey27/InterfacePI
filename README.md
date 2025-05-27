@@ -9,7 +9,7 @@ Linkedin: https://www.linkedin.com/in/alberto-acosta-160531368
 <br>
 Gabriel Albuquerque Alencar
 <br>
-https://www.linkedin.com/in/gabriel-alencar-041580313/
+Linkedin: https://www.linkedin.com/in/gabriel-alencar-041580313/
 <br>
 <br>
 Heitor Rodrigues Parente 
