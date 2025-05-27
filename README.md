@@ -32,6 +32,14 @@ Paulo Vitor Rebelo
 Linkedin: https://www.linkedin.com/in/paulo-rodrigues-016617359?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
 <br>
 <br>
-
-
+Vinícius Ferreira de Moraes
+<br>
+Linkedin: https://www.linkedin.com/in/vin%C3%ADcius-ferreira-de-moraes-4a3588213?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app
+<br>
+<br>
+Luiz Matheus de Araújo Queiroga
+<br>
+Linkedin: https://www.linkedin.com/in/luiz-queiroga-9b80a0368?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
+<br>
+<br>
 
