@@ -42,4 +42,8 @@ Luiz Matheus de Araújo Queiroga
 Linkedin: https://www.linkedin.com/in/luiz-queiroga-9b80a0368?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
 <br>
 <br>
+Bernardo Lobato Ferreira
+<br>
+Linkedin: https://www.linkedin.com/in/bernardo-lobato-0a5932364?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app
+
 
